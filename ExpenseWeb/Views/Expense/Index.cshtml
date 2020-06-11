@@ -1,0 +1,31 @@
+﻿@model IEnumerable<ExpenseIndexModel>
+
+<h1>Uitgaven</h1>
+
+@if (Model == null || !Model.Any())
+{
+    <p>Nog geen boodschapen gedaan</p>
+}
+else
+{
+<table>
+    <tr>
+        <th>Name</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Date
+            </td>
+            <td>
+                @item.Amount
+            </td>
+        </tr>
+    }
+</table>
+}
+
+<a asp-action="Create" asp-controller="Expense" class="btn btn-primary">Toevoegen</a>
+
