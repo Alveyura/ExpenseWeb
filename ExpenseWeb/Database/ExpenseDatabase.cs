@@ -12,7 +12,7 @@ namespace ExpenseWeb.Database
         IEnumerable<Expense> GetExpense();
         Expense GetExpense(int id);
         void Delete(int id);
-        //void Update(int id, Expense updatedContact);
+        void Update(int id, Expense updatedContact);
     }
 
     public class ExpenseDatabase : IExpenseDatabase
@@ -55,20 +55,15 @@ namespace ExpenseWeb.Database
             }
         }
 
-        //public void Update(int id, Expense updatedExpense)
-        //{
-        //    var Expense = _Expense.SingleOrDefault(x => x.Id == id);
-        //    if (Expense != null)
-        //    {
-        //        Expense.FirstName = updatedExpense.FirstName;
-        //        Expense.LastName = updatedExpense.LastName;
-        //        Expense.Email = updatedExpense.Email;
-        //        Expense.BirthDate = updatedExpense.BirthDate;
-        //        Expense.Description = updatedExpense.Description;
-        //        Expense.PhoneNumber = updatedExpense.PhoneNumber;
-        //        Expense.Addres = updatedExpense.Addres;
-        //        Expense.PhotoUrl = updatedExpense.PhotoUrl;
-        //    }
-        //}
+        public void Update(int id, Expense updatedExpense)
+        {
+            var Expense = _Expense.SingleOrDefault(x => x.Id == id);
+            if (Expense != null)
+            {
+                Expense.Date = updatedExpense.Date;
+                Expense.Amount = updatedExpense.Amount;
+                Expense.Description = updatedExpense.Description;
+            }
+        }
     }
 }

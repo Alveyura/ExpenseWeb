@@ -53,5 +53,43 @@ namespace ExpenseWeb.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Expense expenseFromDb = _expenseDatabase.GetExpense((int)id);
+
+            ExpenseEditModel movie = new ExpenseEditModel()
+            {
+                Date = expenseFromDb.Date,
+                Amount = expenseFromDb.Amount,
+                Description = expenseFromDb.Description
+            };
+
+            return View(movie);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, ExpenseEditModel expense)
+        {
+            if (!TryValidateModel(expense))
+            {
+                return View(expense);
+            }
+
+            _expenseDatabase.Update(id, new Expense()
+            {
+                Date = expense.Date,
+                Amount = expense.Amount,
+                Description = expense.Description
+            });
+
+            return RedirectToAction("Detail", new { Id = id });
+
+        }
     }
 }
