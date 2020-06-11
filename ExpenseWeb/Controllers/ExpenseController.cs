@@ -1,4 +1,5 @@
 ﻿using ExpenseWeb.Database;
+using ExpenseWeb.Domain;
 using ExpenseWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -26,6 +27,31 @@ namespace ExpenseWeb.Controllers
                 Amount = item.Amount
             });
             return View(Expense);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult Create(ExpenseCreateModel expense)
+        {
+            if (!TryValidateModel(expense))
+            {
+                return View(expense);
+            }
+            Expense newExpense = new Expense()
+            {
+                Description = expense.Description,
+                Amount = expense.Amount,
+                Date = expense.Date
+            };
+
+            _expenseDatabase.Insert(newExpense);
+
+            return RedirectToAction("Index");
         }
     }
 }
